@@ -87,9 +87,11 @@ const addDoctor = async (req, res) => {
 //api for the addmin login
 
 const loginAdmin = async (req, res) => {
-
+    // res.setHeader('Access-Control-Allow-Origin', 'https://docbook-admin.vercel.app');
+    // res.setHeader('Access-Control-Allow-Credentials', 'true');
+    console.log("Admin login attempt", req.body);
+    
     try {
-
         const { email, password } = req.body;
 
         if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
@@ -97,32 +99,32 @@ const loginAdmin = async (req, res) => {
                 { admin: true, email: process.env.ADMIN_EMAIL }, 
                 process.env.JWT_SECRET, 
                 { expiresIn: '1h' }
-              )
+            );
+            // YAHAN SET KAREIN
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: true,      // Render/production pe true
+                sameSite: 'none'   // Cross-origin ke liye
+            });
             res.json({
                 success: true,
                 token
-            })
-
-        }else {
+            });
+        } else {
             res.json({
                 success: false,
                 message: "Invalid credentials",
                 admin: false
-            })
+            });
         }
-
-      
-        
     } catch (error) {
         console.log(error)
         res.json({
             success: false,
             message: "Internal server error",
             error: error.message
-        })
-        
+        });
     }
-
 }
 //api to get all doctors list for admin panel
 const allDoctors = async (req, res) =>{

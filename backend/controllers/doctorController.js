@@ -43,22 +43,24 @@ const loginDoctor = async (req, res) => {
         if (!doctor) {
             return res.json({ success: false, message: "Doctor not found" });
         }
-       const isMatch = await bcrypt.compare(password, doctor.password);
+        const isMatch = await bcrypt.compare(password, doctor.password);
         if (isMatch) {
-            const token = jwt.sign({ id: doctor._id }, process.env.JWT_SECRET)
+            const token = jwt.sign({ id: doctor._id }, process.env.JWT_SECRET);
+            // YAHAN COOKIE SET KAREIN
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: true,      // Render/production pe true
+                sameSite: 'none'   // Cross-origin ke liye
+            });
             res.json({
                 success: true,
                 message: "Login successful",
                 token,
             });
-
-            
         }
         else {
             res.json({ success: false, message: "Invalid credentials" });
         }
-       
-        
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: error.message });
@@ -171,4 +173,4 @@ const updateDoctorProfile = async (req, res) => {
       
 
 export { changeAvailability, doctorList,loginDoctor,appointmentsDoctor, appointmentComplete ,appointmentCancel,doctorDashboard,doctorProfile,updateDoctorProfile}
-   
+

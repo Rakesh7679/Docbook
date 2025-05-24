@@ -20,7 +20,8 @@ const Login = () => {
           localStorage.removeItem('dToken'); // Admin login par doctor token hatao
           const { data } = await axios.post(backendUrl+'/api/admin/login', {
             email, password
-          })
+          }, { withCredentials: true }
+        )
           if(data.success){
             localStorage.setItem('aToken', data.token)
             setAToken(data.token);
@@ -31,7 +32,9 @@ const Login = () => {
           localStorage.removeItem('aToken'); // Doctor login par admin token hatao
           const { data } = await axios.post(backendUrl+'/api/doctor/login', {
             email, password
-          })
+          },
+          { withCredentials: true }
+        )
           if(data.success){
             localStorage.setItem('dToken', data.token)
             setDToken(data.token)
@@ -61,7 +64,7 @@ const Login = () => {
           <p>Password</p>
           <input onChange={(e)=>setPassword(e.target.value)} value={password} className='border border-[#DADADA] rounded w-full p-2 mt-1'  type="password"  required/>
      </div>
-     <button className='bg-[#5F6FFF] text-white w-full py-2 rounded-md text-base'>Login</button>
+     <button type="submit" className='bg-[#5F6FFF] text-white w-full py-2 rounded-md text-base'>Login</button>
      {
         state === 'Admin' ? (
           <p className='text-sm text-[#5E5E5E] mt-2'>Doctor Login? <span className='text-[#5F6FFF] cursor-pointer' onClick={() => setState('Doctor')}>Click here</span></p>

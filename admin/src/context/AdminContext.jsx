@@ -14,21 +14,17 @@ const AdminContextProvider = (props)=>{
     const backendUrl = import.meta.env.VITE_BACKEND_URL
     const getAllDoctors = async () => {
         try {
-            const{data} = await axios.post(backendUrl + '/api/admin/all-doctors',{},{headers:{aToken}})
-            if(data.success ){
+            const { data } = await axios.get(backendUrl + '/api/admin/all-doctors', { headers: { aToken } })
+            console.log("API response:", data);
+            if (data.success) {
                 setDoctors(data.doctors)
                 console.log(data.doctors);
-                
-            }else{
+            } else {
                 toast.error(data.message)
             }
-            
         } catch (error) {
-        
             toast.error(error.message)
-            
         }
-
     }
 
     const changeAvailability = async (docId) => {
