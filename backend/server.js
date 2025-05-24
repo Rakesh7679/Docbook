@@ -1,27 +1,21 @@
 import express from 'express';
 import cors from 'cors';
-// import 'dotenv/config'
+import dotenv from 'dotenv';
 import connectDB from './config/mongodb.js';
 import connectCloudinary from './config/cloudinary.js';
-import adminRouter from './routes/adminRoute.js'
-import dotenv from 'dotenv';
+import adminRouter from './routes/adminRoute.js';
 import doctorRouter from './routes/doctorRoute.js';
 import userRouter from './routes/userRoute.js';
-import path from 'path';
 
 dotenv.config();
-
-
-
-
-
-//app config
 const app = express();
 const port = process.env.PORT || 4000;
-connectDB()
-connectCloudinary()
 
+// DB + Cloudinary
+connectDB();
+connectCloudinary();
 
+<<<<<<< HEAD
 
 //middleware
 app.use(express.json());
@@ -70,27 +64,33 @@ app.use(
     })
 );
 
+=======
+// ✅ CORS (must come BEFORE routes!)
+app.use(cors({
+  origin: [
+    'https://docbook-frontend.vercel.app',
+    'https://docbook-admin.vercel.app'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+app.options('*', cors()); // Handle preflight
+>>>>>>> 042a2b6bf51243e35d2be2890f12fcd5a6c875ae
 
-//api endpoint
-app.use('/api/admin', adminRouter)
-app.use('/api/doctor', doctorRouter)
-app.use('/api/user', userRouter)
+// Body parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// if(process.env.NODE_ENV === 'production'){
-//     app.use(express.static(path.join(__dirname, '../frontend/dist')))
-//     app.get('*', (req, res) => {
-//         res.sendFile(path.resolve(__dirname, '../frontend', 'dist', 'index.html'))
-//     })
-// }
-
-
-//localhost:4000/api/admin/add-doctor
+// ✅ API routes
+app.use('/api/admin', adminRouter);
+app.use('/api/doctor', doctorRouter);
+app.use('/api/user', userRouter);
 
 app.get('/', (req, res) => {
-    res.send('Hello World')
-})
+  res.send('API is running...');
+});
 
-//listening to server
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-})
+  console.log(`Server running on port ${port}`);
+});
