@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-import React, { useContext, useEffect } from 'react'
 
-=======
 import React, { useEffect, useState } from 'react'
->>>>>>> f9f3799c434c79e41601683220b04f142872d61b
 import { useNavigate } from 'react-router-dom'
 
 const TopDoctors = () => {
@@ -12,22 +8,6 @@ const TopDoctors = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-<<<<<<< HEAD
-    const navigate = useNavigate()
-    const {doctors, setDoctors} = useContext(AppContext)
-
-    useEffect(() => {
-        fetch('http://localhost:4000/api/admin/all-doctors')
-          .then(res => res.json())
-          .then(data => {
-            console.log("Backend response:", data); // <-- Yahan print hoga
-            setDoctors(data.doctors);
-          })
-          .catch(err => {
-            console.error("Fetch error:", err); // Error bhi print hoga
-          });
-    }, []);
-=======
   useEffect(() => {
     fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/all-doctors`)
       .then(res => {
@@ -46,7 +26,7 @@ const TopDoctors = () => {
 
   if (loading) return <div className="text-center my-10">Loading...</div>
   if (error) return <div className="text-center my-10 text-red-500">Error: {error}</div>
->>>>>>> f9f3799c434c79e41601683220b04f142872d61b
+
 
   return (
     <div className='flex flex-col items-center gap-4 my-16 text-gray-900 md:mx-10'>

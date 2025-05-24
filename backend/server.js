@@ -19,14 +19,49 @@ connectCloudinary();
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({
-  origin: [
-    // 'http://localhost:5173',
-    // 'http://localhost:3000',
-    'https://docbook-frontend.vercel.app',
-    
-  ]
-}));
+
+
+/**
+ * * @param {express.Request}  req
+ * * @param {express.Response} res
+ */
+function getOrigin(origin, callback) {
+
+    try {
+        const _allowedOrigins = process.env.MODE ? [
+            "http://localhost:3000",
+            "http://localhost:5174"
+        ] : [
+            'https://docbook-admin.vercel.app' 
+            // Add more allowed origins as needed
+            
+        ];
+        console.log("Wildcard Origin:", _allowedOrigins);
+
+        // Allow origin if it's in the list
+        if (_allowedOrigins.includes(origin)) {
+            return callback(null, origin);
+        }
+
+        // Optionally block unknown origins instead of defaulting to one
+        return callback(new Error('Not allowed by CORS'), false);
+
+    } catch (error) {
+        console.error("Error determining origin:", error);
+        return callback(null, "http://localhost:3000"); // Safe fallback
+    }
+}
+
+
+app.use(
+    cors({
+        origin: getOrigin,
+        credentials: true,
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    })
+);
+
+
 
 //api endpoint
 app.use('/api/admin', adminRouter)
