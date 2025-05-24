@@ -21,6 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
+
 const allowedOrigins = process.env.MODE === 'development' ? [
     'http://localhost:3000',
     'http://localhost:3001', 
