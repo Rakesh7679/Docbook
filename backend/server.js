@@ -34,12 +34,9 @@ function getOrigin(origin, callback) {
         ] : [
             'https://docbook-admin.vercel.app',
             "https://docbook-frontend.vercel.app",
-            "docbook-six.vercel.app",
-
-            // Add more allowed origins as needed
-            
+            "https://docbook-six.vercel.app",
         ];
-        // console.log("Wildcard Origin:", _allowedOrigins);
+        console.log("Wildcard Origin:", _allowedOrigins);
 
         // Allow origin if it's in the list
         if (_allowedOrigins.includes(origin)) {
@@ -47,7 +44,7 @@ function getOrigin(origin, callback) {
         }
 
         // Optionally block unknown origins instead of defaulting to one
-        return callback(new Error('Not allowed by CORS'), false);
+        throw new Error('Not allowed by CORS');
 
     } catch (error) {
         console.error("Error determining origin:", error);
