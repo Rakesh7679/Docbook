@@ -45,14 +45,10 @@ const loginDoctor = async (req, res) => {
         }
         const isMatch = await bcrypt.compare(password, doctor.password);
         if (isMatch) {
-<<<<<<< HEAD
             const token = jwt.sign({ id: doctor._id }, process.env.JWT_SECRET);
             // YAHAN COOKIE SET KAREIN
             res.cookie('token', token, {
-=======
-            const token = jwt.sign({ id: doctor._id }, process.env.JWT_SECRET)
-             res.cookie('token', token, {
->>>>>>> 042a2b6bf51243e35d2be2890f12fcd5a6c875ae
+
                 httpOnly: true,
                 secure: true,      // Render/production pe true
                 sameSite: 'none'   // Cross-origin ke liye

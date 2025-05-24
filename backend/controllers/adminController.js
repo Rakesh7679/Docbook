@@ -87,16 +87,6 @@ const addDoctor = async (req, res) => {
 //api for the addmin login
 
 const loginAdmin = async (req, res) => {
-<<<<<<< HEAD
-    // res.setHeader('Access-Control-Allow-Origin', 'https://docbook-admin.vercel.app');
-    // res.setHeader('Access-Control-Allow-Credentials', 'true');
-    console.log("Admin login attempt", req.body);
-    
-=======
-     res.setHeader('Access-Control-Allow-Origin', 'https://docbook-admin.vercel.app');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-
->>>>>>> 042a2b6bf51243e35d2be2890f12fcd5a6c875ae
     try {
         const { email, password } = req.body;
 
@@ -105,14 +95,9 @@ const loginAdmin = async (req, res) => {
                 { admin: true, email: process.env.ADMIN_EMAIL }, 
                 process.env.JWT_SECRET, 
                 { expiresIn: '1h' }
-<<<<<<< HEAD
             );
-            // YAHAN SET KAREIN
             res.cookie('token', token, {
-=======
-              )
-             res.cookie('token', token, {
->>>>>>> 042a2b6bf51243e35d2be2890f12fcd5a6c875ae
+
                 httpOnly: true,
                 secure: true,      // Render/production pe true
                 sameSite: 'none'   // Cross-origin ke liye
