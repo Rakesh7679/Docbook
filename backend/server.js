@@ -32,11 +32,12 @@ function getOrigin(origin, callback) {
             "http://localhost:3000",
             "http://localhost:5174"
         ] : [
-            'https://docbook-admin.vercel.app' 
+            'https://docbook-admin.vercel.app',
+            "https://docbook-frontend.vercel.app",
             // Add more allowed origins as needed
             
         ];
-        console.log("Wildcard Origin:", _allowedOrigins);
+        // console.log("Wildcard Origin:", _allowedOrigins);
 
         // Allow origin if it's in the list
         if (_allowedOrigins.includes(origin)) {
