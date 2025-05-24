@@ -35,7 +35,7 @@ function getOrigin(origin, callback) {
             'https://docbook-admin.vercel.app',
             "https://docbook-frontend.vercel.app",
             "docbook-six.vercel.app",
-"
+
             // Add more allowed origins as needed
             
         ];
