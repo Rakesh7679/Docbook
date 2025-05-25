@@ -31,19 +31,8 @@ const allowedOrigins = process.env.MODE === 'development' ? [
     'https://docbook-six.vercel.app'
 ];
 
-app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(null, false);
-        }
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'token', 'atoken', 'dtoken', "Cookie"]
-}))
+app.use(cors()); // allow all origins (not recommended for production)
+
 
 //api endpoint
 app.use('/api/admin', adminRouter)
