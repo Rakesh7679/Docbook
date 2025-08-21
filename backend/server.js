@@ -27,7 +27,10 @@ const allowedOrigins = process.env.MODE === 'development' ? [
     'http://localhost:3002',
     'http://localhost:3003',
     'http://localhost:5173',
-    'http://localhost:5174'
+    'http://localhost:5174',
+    'http://192.168.1.9:3000',
+    'http://192.168.1.9:5173',
+    'http://192.168.1.9:5174'
 ] : [
     'https://docbook-frontend.vercel.app',
     'https://docbook-admin.vercel.app',
@@ -59,7 +62,7 @@ app.use(cors({
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'atoken', 'dtoken'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'atoken', 'dtoken', 'token'],
 }));
 
 

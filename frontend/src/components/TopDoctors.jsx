@@ -1,31 +1,11 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { AppContext } from '../context/AppContext'
 
 const TopDoctors = () => {
   const navigate = useNavigate()
-  const [doctors, setDoctors] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/all-doctors`)
-      .then(res => {
-        if (!res.ok) throw new Error('Network response was not ok')
-        return res.json()
-      })
-      .then(data => {
-        setDoctors(data.doctors)
-        setLoading(false)
-      })
-      .catch(err => {
-        setError(err.message)
-        setLoading(false)
-      })
-  }, [])
-
-  if (loading) return <div className="text-center my-10">Loading...</div>
-  if (error) return <div className="text-center my-10 text-red-500">Error: {error}</div>
+  const { doctors } = useContext(AppContext)
 
 
   return (
