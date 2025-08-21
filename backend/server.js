@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 function getOrigin(origin, callback) {
 
     try {
-        const _allowedOrigins = process.env.MODE ? [
+        const _allowedOrigins = process.env.MODE === 'development' ? [
             "http://localhost:3000",
             "http://localhost:5174"
         ] : [
@@ -36,7 +36,14 @@ function getOrigin(origin, callback) {
             "https://docbook-frontend.vercel.app",
             "https://docbook-six.vercel.app",
         ];
-        console.log("Wildcard Origin:", _allowedOrigins);
+        console.log("Current MODE:", process.env.MODE);
+        console.log("Allowed Origins:", _allowedOrigins);
+        console.log("Request Origin:", origin);
+
+        // Allow requests with no origin (mobile apps, curl, Postman, etc.)
+        if (!origin) {
+            return callback(null, true);
+        }
 
         // Allow origin if it's in the list
         if (_allowedOrigins.includes(origin)) {
