@@ -4,23 +4,7 @@ import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import {v2 as cloudinary} from "cloudinary";
 import doctorModel from "../models/doctorModel.js";
-import appointmentModel from        }
-    }
-}
-
-// API to get all doctors list for frontend
-const listDoctors = async (req, res) => {
-    try {
-        const doctors = await doctorModel.find({ available: true }).select(['-password', '-email']);
-        res.json({ success: true, doctors });
-    } catch (error) {
-        console.log(error);
-        res.json({ success: false, message: "Internal server error" });
-    }
-}
-
-
-export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointments, cancelAppointment, paymentRazorpay, verifyRazorpay, listDoctors };odels/appointmentModel.js";
+import appointmentModel from "../models/appointmentModel.js";
 import razorpay from "razorpay";
 import dotenv from 'dotenv';
 dotenv.config();
