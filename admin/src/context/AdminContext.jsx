@@ -14,7 +14,7 @@ const AdminContextProvider = (props)=>{
     const backendUrl = import.meta.env.VITE_BACKEND_URL
     const getAllDoctors = async () => {
         try {
-            const { data } = await axios.get(backendUrl + '/api/admin/all-doctors', { headers: { aToken } })
+            const { data } = await axios.get(backendUrl + '/api/admin/all-doctors', { headers: { atoken: aToken } })
             console.log("API response:", data);
             if (data.success) {
                 setDoctors(data.doctors)
@@ -29,7 +29,7 @@ const AdminContextProvider = (props)=>{
 
     const changeAvailability = async (docId) => {
         try {
-            const{data} = await axios.post(backendUrl + '/api/admin/change-avaiability',{docId},{headers:{aToken}})
+            const{data} = await axios.post(backendUrl + '/api/admin/change-avaiability',{docId},{headers:{atoken: aToken}})
             if(data.success ){
                 toast.success(data.message)
                 getAllDoctors()
@@ -46,7 +46,7 @@ const AdminContextProvider = (props)=>{
 
     const getAllAppointments = async () => {
         try {
-            const{data} = await axios.get(backendUrl + '/api/admin/appoinments',{headers:{aToken}})
+            const{data} = await axios.get(backendUrl + '/api/admin/appoinments',{headers:{atoken: aToken}})
             if(data.success ){
                 setAppoinments(data.appoinments)
                 console.log(data.appoinments);
@@ -65,7 +65,7 @@ const AdminContextProvider = (props)=>{
 
     const cancelAppointment = async (appointmentId) => {
         try {
-            const{data} = await axios.post(backendUrl + '/api/admin/cancel-appointment',{appointmentId},{headers:{aToken}})
+            const{data} = await axios.post(backendUrl + '/api/admin/cancel-appointment',{appointmentId},{headers:{atoken: aToken}})
             if(data.success ){
                 toast.success(data.message)
                 getAllAppointments()
@@ -83,10 +83,12 @@ const AdminContextProvider = (props)=>{
 
     const getDashData = async () => {
         try {
-            const{data} = await axios.get(backendUrl + '/api/admin/dashboard',{headers:{aToken}})
+            console.log('Getting dashboard data with token:', aToken);
+            const{data} = await axios.get(backendUrl + '/api/admin/dashboard',{headers:{atoken: aToken}})
+            console.log('Dashboard API response:', data);
             if(data.success ){
                 setDashData(data.dashData)
-                console.log(data.dashData);
+                console.log('Dashboard data set:', data.dashData);
                
                 
             }else{

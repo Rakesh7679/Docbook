@@ -18,14 +18,18 @@ const Login = () => {
       try {
         if (state === 'Admin') {
           localStorage.removeItem('dToken'); // Admin login par doctor token hatao
+          console.log('Admin login attempt:', email, password);
+          console.log('Backend URL:', backendUrl + '/api/admin/login');
           const { data } = await axios.post(backendUrl+'/api/admin/login', {
             email, password
           }, { withCredentials: true }
         )
+          console.log('Admin login response:', data);
           if(data.success){
             localStorage.setItem('aToken', data.token)
             setAToken(data.token);
           }else{
+            console.error('Admin login failed:', data.message);
             toast.error(data.message)
           }
         } else {
