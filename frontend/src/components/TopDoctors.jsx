@@ -1,4 +1,3 @@
-
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
@@ -54,7 +53,7 @@ const TopDoctors = () => {
                 className="border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500"
               >
                 <img
-                  className="bg-blue-50 w-full h-48 object-cover"
+                  className="bg-blue-50 w-full h-48 object-contain"
                   src={item.image || 'https://via.placeholder.com/200x150?text=Loading...'}
                   alt={item.name}
                   onError={(e) =>
@@ -97,4 +96,3 @@ const TopDoctors = () => {
 }
 
 export default TopDoctors
-
