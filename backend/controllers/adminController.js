@@ -89,18 +89,20 @@ const addDoctor = async (req, res) => {
 const loginAdmin = async (req, res) => {
     try {
         const { email, password } = req.body;
+        const adminEmail = (process.env.ADMIN_EMAIL || '').trim().toLowerCase();
+        const adminPassword = (process.env.ADMIN_PASSWORD || '').trim();
 
-        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+        if (email && password && email.trim().toLowerCase() === adminEmail && password.trim() === adminPassword) {
             const token = jwt.sign(
                 { admin: true, email: process.env.ADMIN_EMAIL }, 
                 process.env.JWT_SECRET, 
                 { expiresIn: '24h' }
             );
+            const isProd = process.env.MODE === 'production' || process.env.NODE_ENV === 'production';
             res.cookie('token', token, {
-
                 httpOnly: true,
-                secure: true,      // Render/production pe true
-                sameSite: 'none'   // Cross-origin ke liye
+                secure: isProd,
+                sameSite: isProd ? 'none' : 'lax'
             });
             res.json({
                 success: true,
