@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
-import Login from './pages/Login'
-import { ToastContainer, } from 'react-toastify';
+import React, { useContext } from 'react';
+import Login from './pages/Login';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AdminContext } from './context/AdminContext';
 import Navbar from './components/Navbar';
@@ -14,15 +14,17 @@ import { DoctorContext } from './context/DoctorContext';
 import DoctorDashboard from './pages/Doctor/DoctorDashboard';
 import DoctorAppointments from './pages/Doctor/DoctorAppointments';
 import DoctorProfile from './pages/Doctor/DoctorProfile';
+import DoctorConsultation from './pages/Doctor/DoctorConsultation';
+import DoctorPrescriptions from './pages/Doctor/DoctorPrescriptions';
 
 const App = () => {
-  const { aToken } = useContext(AdminContext)
-  const { dToken } = useContext(DoctorContext)
+  const { aToken } = useContext(AdminContext);
+  const { dToken } = useContext(DoctorContext);
 
   if (aToken) {
     // Admin panel only
     return (
-      <div className='bg-[#F8F9FD]'>
+      <div className='bg-[#F8F9FD] min-h-screen'>
         <ToastContainer />
         <Navbar />
         <div className='flex items-start'>
@@ -37,13 +39,13 @@ const App = () => {
           </Routes>
         </div>
       </div>
-    )
+    );
   }
 
   if (dToken) {
     // Doctor panel only
     return (
-      <div className='bg-[#F8F9FD]'>
+      <div className='bg-[#F8F9FD] min-h-screen'>
         <ToastContainer />
         <Navbar />
         <div className='flex items-start'>
@@ -51,12 +53,14 @@ const App = () => {
           <Routes>
             <Route path='/doctor-dashboard' element={<DoctorDashboard />} />
             <Route path='/doctor-appointments' element={<DoctorAppointments />} />
+            <Route path='/doctor-prescriptions' element={<DoctorPrescriptions />} />
+            <Route path='/doctor-consultation/:appointmentId' element={<DoctorConsultation />} />
             <Route path='/doctor-profile' element={<DoctorProfile />} />
             <Route path='*' element={<DoctorDashboard />} />
           </Routes>
         </div>
       </div>
-    )
+    );
   }
 
   // If not logged in
@@ -65,7 +69,7 @@ const App = () => {
       <Login />
       <ToastContainer />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
