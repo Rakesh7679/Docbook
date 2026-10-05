@@ -12,7 +12,14 @@ const DoctorContextProvider = (props)=>{
     const [dashData, setDashData] = useState(false)
     const [profileData, setProfileData] = useState(false)
 
-     const backendUrl = import.meta.env.VITE_BACKEND_URL
+     const getBackendUrl = () => {
+        const envUrl = import.meta.env.VITE_BACKEND_URL;
+        if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
+            return 'https://docbook-bb7z.onrender.com';
+        }
+        return envUrl || 'http://localhost:8000';
+    };
+    const backendUrl = getBackendUrl();
 
     const getAppointments = async () => {
         try {

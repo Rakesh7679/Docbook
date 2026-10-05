@@ -8,7 +8,14 @@ export const AppContext = createContext()
 const AppContextProvider = (props) => {
     const currencySymbol = '$'
 
-    const backendUrl = import.meta.env.VITE_BACKEND_URL
+    const getBackendUrl = () => {
+        const envUrl = import.meta.env.VITE_BACKEND_URL;
+        if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
+            return 'https://docbook-bb7z.onrender.com';
+        }
+        return envUrl || 'http://localhost:8000';
+    };
+    const backendUrl = getBackendUrl();
     const [doctors, setDoctors] = useState([])
 
     const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : false)

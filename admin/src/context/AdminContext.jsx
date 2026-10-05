@@ -11,7 +11,14 @@ const AdminContextProvider = (props)=>{
     const [dashData,setDashData] = useState(false)
 
 
-    const backendUrl = import.meta.env.VITE_BACKEND_URL
+    const getBackendUrl = () => {
+        const envUrl = import.meta.env.VITE_BACKEND_URL;
+        if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
+            return 'https://docbook-bb7z.onrender.com';
+        }
+        return envUrl || 'http://localhost:8000';
+    };
+    const backendUrl = getBackendUrl();
     const getAllDoctors = async () => {
         try {
             const { data } = await axios.get(backendUrl + '/api/admin/all-doctors', { headers: { atoken: aToken } })
