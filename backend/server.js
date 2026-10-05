@@ -59,6 +59,11 @@ app.use(cors({
         if (!origin) return callback(null, true);
         if (allowedOrigins.includes(origin)) return callback(null, true);
         
+        // Allow any vercel deployment (*.vercel.app)
+        if (origin.endsWith('.vercel.app')) {
+            return callback(null, true);
+        }
+
         // In development mode, allow any local/network origin
         if (process.env.MODE === 'development' || !process.env.MODE) {
             if (origin.startsWith('http://localhost') || origin.startsWith('http://127.0.0.1') || origin.startsWith('http://192.168.')) {
